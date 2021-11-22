@@ -115,19 +115,20 @@ def get_playlist(sp: spotipy.Spotify, id: str, mood: str):
 
     while playlist_items:
         for i, track in enumerate(playlist_items["items"]):
-            # print("name:")
-            # print(track)
             if track["track"] is None:
                 continue
-            # print(track["track"]["name"])
+
             track_id = track["track"]["id"]
+
             if track_id is None:
                 continue
+
             track_features = sp.audio_features(track_id)
             if track_features is not None and track_features[0] is not None:
                 filtered = filter_features(track_features[0], features)
                 filtered.insert(0, mood_map[mood])
                 audio_feautures.append(filtered)
+
         if playlist_items["next"]:
             playlist_items = sp.next(playlist_items)
         else:
@@ -166,15 +167,9 @@ def setup():
 
 def main():
     pp = pprint.PrettyPrinter(indent=4)
-
     sp = setup()
-    # print(sp.categories(country="US"))
-    # pp.pprint(sp.playlist_items("37i9dQZF1DXdPec7aLTmlC"))
-
-    # audio_features = get_playlist(sp, "37i9dQZF1DXdPec7aLTmlC", "happy")
     audio_features = get_data(sp)
     write_to_csv(audio_features)
-    # pp.pprint(audio_features)
 
 
 if __name__ == "__main__":
