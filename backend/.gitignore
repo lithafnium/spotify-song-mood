@@ -1,0 +1,13 @@
+# Python
+.env*
+*.egg-info/
+env/
+Test-Environment
+*.pyc
+*.py[cod]
+env3.6
+.venv/
+venv/
+__pycache__/
+
+.vscode/*

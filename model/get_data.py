@@ -168,8 +168,12 @@ def setup():
 def main():
     pp = pprint.PrettyPrinter(indent=4)
     sp = setup()
-    audio_features = get_data(sp)
-    write_to_csv(audio_features)
+    get_tracks = sp.search("don't stop me now", limit=10)
+    pp.pprint(get_tracks)
+    get_track = sp.track("7hQJA50XrCWABAu5v6QZ4i")
+    pp.pprint(get_track)
+    # audio_features = get_data(sp)
+    # write_to_csv(audio_features)
 
 
 if __name__ == "__main__":
