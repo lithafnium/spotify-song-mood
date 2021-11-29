@@ -4,12 +4,13 @@ import { fonts } from "@app/styles/styles";
 export const Button = styled.button<{
   color?: string;
   backgroundColor?: string;
+  hoverColor?: string;
   padding?: string;
   margin?: string;
   borderRadius?: string;
   fontSize?: string;
 }>`
-  font-family: ${fonts.SECONDARY};
+  font-family: ${fonts.PRIMARY};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.borderRadius};
   background-color: ${(props) => props.backgroundColor};
@@ -17,7 +18,6 @@ export const Button = styled.button<{
   font-size: ${(props) => props.fontSize};
   margin: ${(props) => props.margin};
   transition: 0.2s;
-  font-size: 1.2rem;
   text-decoration: none;
   transition: 0.2s;
   border-bottom: white;
@@ -31,7 +31,8 @@ export const Button = styled.button<{
 
   &:hover {
     cursor: pointer;
-    opacity: 0.8;
+    background-color: ${(props) => props.hoverColor};
+    // opacity: 0.8;
   }
 
   &:focus {

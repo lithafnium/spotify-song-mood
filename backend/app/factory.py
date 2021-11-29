@@ -25,7 +25,7 @@ def register_blueprints(app):
       - app: Flask object
     """
     from .blueprints.test.test_blueprint import test_bp
-    from .blueprints.gpt3_generate.test_generate import generate_bp
+    from .blueprints.spotify.spotify_blueprint import spotify_bp
 
     app.register_blueprint(test_bp)
-    app.register_blueprint(generate_bp)
+    app.register_blueprint(spotify_bp)

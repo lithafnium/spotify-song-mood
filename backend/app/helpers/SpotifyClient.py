@@ -1,6 +1,7 @@
 import os
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from typing import List
 
 client_id = os.environ["SPOTIFY_CLIENT_ID"]
 client_secret = os.environ["SPOTIFY_CLIENT_SECRET"]
@@ -14,7 +15,8 @@ class SpotifyClient:
 
         self.sp = spotipy.Spotify(client_credentials_manager=cc_manager)
         self.audio_features = [
-            "acousticness, danceability",
+            "acousticness",
+            "danceability",
             "energy",
             "instrumentalness",
             "liveness",
@@ -54,3 +56,15 @@ class SpotifyClient:
         name = track_info["name"]
 
         return {"image_url": image_url, "artists": artists, "name": name}
+
+    def get_tracks_info(self, track_ids: List[str]):
+        ret = []
+        for track_id in track_ids:
+            track_info = self.sp.track(track_id)
+            image_url = track_info["album"]["images"][0]
+            artists = [artist["name"] for artist in track_info["album"]["artists"]]
+            name = track_info["name"]
+
+            ret.append({"image_url": image_url, "artists": artists, "name": name})
+
+        return ret

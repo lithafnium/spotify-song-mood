@@ -1,17 +1,18 @@
 import styled from "styled-components";
 
 export const colors = {
-  PRIMARY: "#FD8440",
-  SECONDARY: "#3E533C",
+  PRIMARY: "#1db954",
+  SECONDARY: "#1ed760",
   TERNARY: "#FFF6E9",
-  DARK: "#1e3d59",
-  HIGHLIGHT: "#17BEBB",
+  DARKPRIMARY: "#191414",
+  DARKSECONDARY: "#212121",
+  HIGHLIGHT: "#fefefe",
   // HIGHLIGHT: "#41B49D",
   // HIGHLIGHT: "#F46672",
 };
 
 export const fonts = {
-  // PRIMARY: "Montserrat, sans-serif",
+  PRIMARY: "Montserrat, sans-serif",
   SECONDARY: '"SF Mono","Fira Code","Fira Mono","Roboto Mono",monospace',
   // PRIMARY: '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;',
   // SECONDARY: "'Poppins', sans-serif",
