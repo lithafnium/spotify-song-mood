@@ -40,7 +40,7 @@ class SpotifyClient:
         """
         Return track id(s) from a search term
         """
-        songs = self.sp.search(query, limit=10)
+        songs = self.sp.search(query, limit=4)
         if songs:
             track_ids = [track["id"] for track in songs["tracks"]["items"]]
             return track_ids

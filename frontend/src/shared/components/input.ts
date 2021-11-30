@@ -4,7 +4,7 @@ import { colors } from "@app/styles/styles";
 export const Input = styled.input<{ borderRadius?: string }>`
   background-color: ${colors.DARKSECONDARY};
   color: ${colors.HIGHLIGHT};
-  width: 75%;
+  width: 100%;
   border-radius: ${(props) => props.borderRadius};
   font-size: 16px;
   text-align: left;
