@@ -3,17 +3,28 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from typing import List
 
+# https://stackoverflow.com/questions/57580411/storing-spotify-token-in-flask-session-using-spotipy
+
 client_id = os.environ["SPOTIFY_CLIENT_ID"]
 client_secret = os.environ["SPOTIFY_CLIENT_SECRET"]
+redirect_uri = "http://localhost:5000/login"
+scope = "playlist-modify-private,playlist-modify-public,user-top-read"
 
 
 class SpotifyClient:
     def __init__(self, client_id, client_secret):
-        cc_manager = SpotifyClientCredentials(
+        self.sp_oauth = spotipy.oauth2.SpotifyOAuth(
+            client_id=client_id,
+            client_secret=client_secret,
+            redirect_uri=redirect_uri,
+            scope=scope,
+        )
+
+        self.cc_manager = SpotifyClientCredentials(
             client_id=client_id, client_secret=client_secret
         )
 
-        self.sp = spotipy.Spotify(client_credentials_manager=cc_manager)
+        self.sp = spotipy.Spotify(client_credentials_manager=self.cc_manager)
         self.audio_features = [
             "acousticness",
             "danceability",
@@ -65,6 +76,22 @@ class SpotifyClient:
             artists = [artist["name"] for artist in track_info["album"]["artists"]]
             name = track_info["name"]
 
-            ret.append({"image_url": image_url, "artists": artists, "name": name})
+            ret.append(
+                {
+                    "image_url": image_url,
+                    "artists": artists,
+                    "name": name,
+                    "track_id": track_id,
+                }
+            )
 
         return ret
+
+    def get_authorize_url(self):
+        return self.sp_oauth.get_authorize_url()
+
+    def get_access_token_oauth(self, code: str):
+        return self.sp_oauth.get_access_token(code, as_dict=False)
+
+    def get_access_token(self):
+        return self.cc_manager.get_access_token(as_dict=False)

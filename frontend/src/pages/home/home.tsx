@@ -7,13 +7,15 @@ import {
   PreloadContainer,
   Preloader,
 } from "./styles";
-import { apiPost } from "@app/utils/api";
+import { apiGet, apiPost } from "@app/utils/api";
 import { colors } from "@app/styles/styles";
 import useKeyPress from "@app/shared/utils/useKeyPress";
+import SpotifyPlayer from "@app/shared/components/SpotifyPlayer";
 
 import Songs from "./components/Songs/songs";
 
 const Home = () => {
+  const [token, setAccessToken] = useState("");
   const [songTitle, setSongTitle] = useState("");
   const [songData, setSongData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -26,15 +28,28 @@ const Home = () => {
     setSelected(-1);
     setSongData([]);
     setLoading(true);
-    const response = await apiPost("/search", {
-      body: {
-        songTitle,
-      },
-    });
-    setLoading(false);
-    console.log(response.response.data);
-    setSongData(response.response.data);
+    window.location.href = "http://127.0.0.1:5000/login";
+    // await apiGet("/login", {})
+    //   .then((res) => console.log(res))
+    //   .catch((e) => console.log(e));
+
+    // const response = await apiPost("/search", {
+    //   body: {
+    //     songTitle,
+    //   },
+    // });
+    // setLoading(false);
+    // console.log(response.response.data);
+    // setSongData(response.response.data);
   };
+
+  useEffect(() => {
+    // const getAccessToken = async () => {
+    //   const response = await apiGet("/access-token", {});
+    //   setAccessToken(response.data);
+    // };
+    // getAccessToken();
+  }, []);
 
   useEffect(() => {
     if (enter && focused) {
@@ -44,7 +59,7 @@ const Home = () => {
 
   useEffect(() => {
     if (selected != -1) {
-      setSongData((songData) => songData.filter((_, i) => i === selected));
+      setSongData((songData) => [songData[selected]]);
       setSelected(0);
     }
   }, [selected]);

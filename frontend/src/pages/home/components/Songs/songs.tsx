@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Container,
   Image,
@@ -10,8 +10,6 @@ import {
 } from "./styles";
 import { FaPlay } from "react-icons/fa";
 import { IconContext } from "react-icons";
-import { colors } from "@app/styles/styles";
-import { FadeTransition } from "@app/shared/components";
 
 import { animated, useTransition } from "react-spring";
 // https://codesandbox.io/s/goofy-chaplygin-whvt4
@@ -27,7 +25,7 @@ const Songs = ({ songData, selected, setSelected }: any) => {
       delay: 500,
     }
   );
-  console.log(songData);
+
   return (
     <SongsContainer>
       {transition((styles, item) => {
