@@ -13,15 +13,18 @@ const Login = () => {
         <FadeIn>
           <h1 style={{ color: colors.HIGHLIGHT }}>Spotify Mood Detector</h1>
           <Button
-            padding="10px 30px"
+            padding="10px 50px"
             borderRadius="40px 40px 40px 40px"
             fontSize="1em"
             backgroundColor={colors.SECONDARY}
             hoverColor={colors.PRIMARY}
             color={colors.HIGHLIGHT}
             onClick={() => login()}
+            style={{
+              fontSize: "14px",
+            }}
           >
-            Log in to Spotify
+            LOG IN TO SPOTIFY
           </Button>
         </FadeIn>
       </ContainerInner>

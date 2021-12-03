@@ -25,11 +25,16 @@ const Home = () => {
   const [songData, setSongData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState(false);
-  const [selected, setSelected] = useState(-1);
+  const [selectedSong, setSelectedSong] = useState(null);
 
   const params = useQuery();
 
   const enter = useKeyPress("Enter");
+
+  const setSong = (key: number) => {
+    setSongData([songData[key]]);
+    setSelectedSong(songData[key]);
+  };
 
   useEffect(() => {
     if (!params.has("code")) {
@@ -38,13 +43,9 @@ const Home = () => {
   }, []);
 
   const handleClick = async () => {
-    setSelected(-1);
+    setSelectedSong(null);
     setSongData([]);
     setLoading(true);
-    // window.location.href = "http://127.0.0.1:5000/login";
-    // await apiGet("/login", {})
-    //   .then((res) => console.log(res))
-    //   .catch((e) => console.log(e));
 
     const response = await apiPost("/search", {
       body: {
@@ -61,13 +62,6 @@ const Home = () => {
       handleClick();
     }
   }, [enter]);
-
-  useEffect(() => {
-    if (selected != -1) {
-      setSongData((songData) => [songData[selected]]);
-      setSelected(0);
-    }
-  }, [selected]);
 
   return (
     <Container>
@@ -112,8 +106,8 @@ const Home = () => {
             <Songs
               songData={songData}
               setSongData={setSongData}
-              selected={selected}
-              setSelected={setSelected}
+              selectedSong={selectedSong}
+              setSong={setSong}
             />
           )}
         </FadeIn>
