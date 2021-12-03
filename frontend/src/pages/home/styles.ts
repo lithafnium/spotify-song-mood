@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { device } from "@app/shared/components/layout/layout";
-import { colors, fonts } from "@app/styles/styles";
+import { colors } from "@app/styles/styles";
 
 export const Container = styled.div`
   width: 100%;
@@ -39,7 +39,7 @@ export const Inputs = styled.div`
   z-index: 9999;
 `;
 
-export const PreloadContainer = styled.div<{ loading?: boolean }>`
+export const PreloadContainer = styled.div<{ loading?: Boolean }>`
   z-index: 2;
   width: 100%;
   // height: 100px;

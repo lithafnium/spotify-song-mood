@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { FadeIn, Button, Input } from "@app/shared/components/index";
 import {
   Container,
@@ -7,12 +7,17 @@ import {
   PreloadContainer,
   Preloader,
 } from "./styles";
+import { useLocation } from "react-router-dom";
 import { apiGet, apiPost } from "@app/utils/api";
 import { colors } from "@app/styles/styles";
 import useKeyPress from "@app/shared/utils/useKeyPress";
-import SpotifyPlayer from "@app/shared/components/SpotifyPlayer";
 
 import Songs from "./components/Songs/songs";
+
+const useQuery = () => {
+  const { search } = useLocation();
+  return useMemo(() => new URLSearchParams(search), [search]);
+};
 
 const Home = () => {
   const [token, setAccessToken] = useState("");
@@ -22,34 +27,34 @@ const Home = () => {
   const [focused, setFocused] = useState(false);
   const [selected, setSelected] = useState(-1);
 
+  const params = useQuery();
+
   const enter = useKeyPress("Enter");
+
+  useEffect(() => {
+    if (!params.has("code")) {
+      window.location.href = "/login";
+    }
+  }, []);
 
   const handleClick = async () => {
     setSelected(-1);
     setSongData([]);
     setLoading(true);
-    window.location.href = "http://127.0.0.1:5000/login";
+    // window.location.href = "http://127.0.0.1:5000/login";
     // await apiGet("/login", {})
     //   .then((res) => console.log(res))
     //   .catch((e) => console.log(e));
 
-    // const response = await apiPost("/search", {
-    //   body: {
-    //     songTitle,
-    //   },
-    // });
-    // setLoading(false);
-    // console.log(response.response.data);
-    // setSongData(response.response.data);
+    const response = await apiPost("/search", {
+      body: {
+        songTitle,
+      },
+    });
+    setLoading(false);
+    console.log(response.response.data);
+    setSongData(response.response.data);
   };
-
-  useEffect(() => {
-    // const getAccessToken = async () => {
-    //   const response = await apiGet("/access-token", {});
-    //   setAccessToken(response.data);
-    // };
-    // getAccessToken();
-  }, []);
 
   useEffect(() => {
     if (enter && focused) {

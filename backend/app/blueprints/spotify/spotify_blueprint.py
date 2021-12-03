@@ -26,7 +26,7 @@ def get_code():
         # Step 3. Being redirected from Spotify auth page
         code = request.args.get("code")
         print(request.args.get("code"))
-        return redirect(f"http://localhost:8080?code={code}")
+        return redirect(f"http://localhost:8080/dashboard?code={code}")
     else:
         auth_url = sp_client.get_authorize_url()
         print(auth_url)
