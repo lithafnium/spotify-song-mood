@@ -13,6 +13,7 @@ import { colors } from "@app/styles/styles";
 import useKeyPress from "@app/shared/utils/useKeyPress";
 
 import Songs from "./components/Songs/songs";
+import SpotifyPlayer from "@app/shared/components/SpotifyPlayer";
 
 const useQuery = () => {
   const { search } = useLocation();
@@ -28,7 +29,6 @@ const Home = () => {
   const [selectedSong, setSelectedSong] = useState(null);
 
   const params = useQuery();
-
   const enter = useKeyPress("Enter");
 
   const setSong = (key: number) => {
@@ -37,8 +37,19 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const accessToken = async (code: string) => {
+      const response = await apiPost("/access-token", {
+        body: {
+          code,
+        },
+      });
+      setAccessToken(response.response.data);
+    };
     if (!params.has("code")) {
       window.location.href = "/login";
+    } else {
+      const code = params.get("code");
+      accessToken(code);
     }
   }, []);
 
@@ -110,6 +121,7 @@ const Home = () => {
               setSong={setSong}
             />
           )}
+          {token !== "" && <SpotifyPlayer accessToken={token} />}
         </FadeIn>
       </ContainerInner>
     </Container>

@@ -33,7 +33,7 @@ def get_code():
         return redirect(auth_url)
 
 
-@spotify_bp.route("/access-token")
+@spotify_bp.route("/access-token", methods=["POST"])
 def get_token():
     body = request.json
     sp_client = SpotifyClient(client_id, client_secret)

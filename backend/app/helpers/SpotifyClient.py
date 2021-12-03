@@ -8,7 +8,7 @@ from typing import List
 client_id = os.environ["SPOTIFY_CLIENT_ID"]
 client_secret = os.environ["SPOTIFY_CLIENT_SECRET"]
 redirect_uri = "http://localhost:5000/login"
-scope = "playlist-modify-private,playlist-modify-public,user-top-read"
+scope = ["streaming", "user-read-email", "user-read-private"]
 
 
 class SpotifyClient:

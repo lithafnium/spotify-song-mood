@@ -1,7 +1,5 @@
 import React from "react";
 import { SongsContainer } from "./styles";
-import { FaPlay } from "react-icons/fa";
-import { IconContext } from "react-icons";
 
 import { animated, useTransition } from "react-spring";
 import { FadeIn } from "@app/shared/components";

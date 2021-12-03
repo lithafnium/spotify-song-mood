@@ -20,7 +20,7 @@ const SpotifyPlayer = ({ accessToken }: any) => {
 
     document.body.appendChild(script);
 
-    window.onSpotifyWebPlaybackSDKReady = () => {
+    window.onSpotifyWebPlaybackSDKReady = async () => {
       console.log(accessToken);
       const player = new window.Spotify.Player({
         name: "Web Playback SDK",
@@ -30,7 +30,9 @@ const SpotifyPlayer = ({ accessToken }: any) => {
         volume: 0.5,
       });
       console.log("setting player");
+      console.log(player);
       setPlayer(player);
+
       player.on("initialization_error", ({ message }) => {
         console.error("Failed to initialize", message);
       });
@@ -47,8 +49,6 @@ const SpotifyPlayer = ({ accessToken }: any) => {
         console.log("Device ID has gone offline", device_id);
       });
       player.addListener("player_state_changed", (state) => {
-        console.log(state);
-
         if (!state) {
           return;
         }
