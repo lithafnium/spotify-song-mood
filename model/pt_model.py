@@ -136,36 +136,35 @@ def load_model(path):
 
 def main(train_model: bool = False, evaluate_model: bool = False):
     # pp = pprint.PrettyPrinter(indent=4)
-    bs = 64
-
-    df = pd.read_csv("./data.csv")
-
-    moods = df["mood"].to_numpy()
-    song_features = df[features[1:]].to_numpy()
-
-    dataset = MusicDataset(song_features, moods)
-
-    train_size = int(0.8 * len(dataset))
-    val_size = len(dataset) - train_size
-    train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
-
-    model = SpotifyMoodModel(len(features[1:]), len(playlists))
-
-    train_dataloader = DataLoader(
-        train_dataset,
-        sampler=RandomSampler(train_dataset),  # Sampling for training is random
-        batch_size=bs,
-    )
-
-    validation_dataloader = DataLoader(
-        val_dataset,
-        sampler=SequentialSampler(
-            val_dataset
-        ),  # Sampling for validation is sequential as the order doesn't matter.
-        batch_size=bs,
-    )
-
     if train_model:
+        bs = 64
+
+        df = pd.read_csv("./data.csv")
+
+        moods = df["mood"].to_numpy()
+        song_features = df[features[1:]].to_numpy()
+
+        dataset = MusicDataset(song_features, moods)
+
+        train_size = int(0.8 * len(dataset))
+        val_size = len(dataset) - train_size
+        train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
+
+        model = SpotifyMoodModel(len(features[1:]), len(playlists))
+
+        train_dataloader = DataLoader(
+            train_dataset,
+            sampler=RandomSampler(train_dataset),  # Sampling for training is random
+            batch_size=bs,
+        )
+
+        validation_dataloader = DataLoader(
+            val_dataset,
+            sampler=SequentialSampler(
+                val_dataset
+            ),  # Sampling for validation is sequential as the order doesn't matter.
+            batch_size=bs,
+        )
         train(model, train_dataloader, validation_dataloader, 1000)
     if evaluate_model:
         model = load_model("./model.pt")

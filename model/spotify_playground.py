@@ -12,6 +12,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.cluster import KMeans
 from sklearn.model_selection import GridSearchCV
 
+from get_data import search_song
+
 
 scopes = ["streaming", "user-read-email", "user-read-private"]
 
@@ -29,12 +31,14 @@ def main():
 
     pp = pprint.PrettyPrinter(indent=4)
     sp = setup()
-    get_tracks = sp.search("don't stop me now", limit=10)
-    pp.pprint(get_tracks)
-    get_track = sp.track("7hQJA50XrCWABAu5v6QZ4i")
-    pp.pprint(get_track)
 
-    token = util.prompt_for_user_token("lithafnium", "streaming")
+    pp.pprint(search_song(sp, "don't stop me now")["tracks"]["items"])
+    # get_tracks = sp.search("don't stop me now", limit=10)
+    # pp.pprint(get_tracks)
+    # get_track = sp.track("7hQJA50XrCWABAu5v6QZ4i")
+    # pp.pprint(get_track)
+
+    # token = util.prompt_for_user_token("lithafnium", "streaming")
     # audio_features = get_data(sp)
     # write_to_csv(audio_features)
 

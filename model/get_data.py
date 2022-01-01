@@ -96,6 +96,21 @@ features = [
 ]
 
 
+def search_song(sp: spotipy.Spotify, title: str):
+    results = sp.search(title, limit=10, type="track")
+    if results is not None:
+        track_id = results["tracks"]["items"][0]["id"]
+        track_features = sp.audio_features(track_id)
+
+        if track_features is not None and track_features[0] is not None:
+            filtered = filter_features(track_features[0], features)
+            return filtered
+        else:
+            return None
+    else:
+        return None
+
+
 def filter_features(track_features, desired_features):
     ret = []
 
